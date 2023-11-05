@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # - uses: Kaven-Universe/github-action-current-date-time@v1
-    #   id: time
-    #   with:
-    #     format: "DD_HH_mm_ss"
+    - uses: Kaven-Universe/github-action-current-date-time@v1
+      id: time
+      with:
+        format: "DD_HH_mm_ss"
 
     - uses: actions/checkout@v3
     # - name: Build the Docker image
@@ -32,7 +32,7 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64 #,linux/arm/v7,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
         push: true
-        tags: "${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:latest"
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:latest,${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:${{ steps.time.outputs.milliseconds_since_epoch }}
 #        labels: 
         cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:buildcache
         cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:buildcache,mode=max
