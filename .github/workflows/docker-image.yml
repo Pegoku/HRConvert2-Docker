@@ -28,7 +28,7 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64,linux/arm/v7 #,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
         push: true
-        tags: "${{ steps.time.outputs.time }}"
-#        labels: ${{ steps.meta.outputs.labels }}
+        tags: "${{ steps.time.outputs.milliseconds_since_epoch }}"
+#        labels: 
 #        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache
 #        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache,mode=max
