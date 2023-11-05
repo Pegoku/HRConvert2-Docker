@@ -13,21 +13,25 @@ jobs:
       with:
         format: "DD_HH_mm_ss"
 
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag hrconvert2:$(date +%s)
+    # - uses: actions/checkout@v3
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag hrconvert2:$(date +%s)
       
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Set builder to multiarch
+      run: docker buildx create --use --platform=linux/arm64,linux/amd64 --name multi-platform-builder; docker buildx inspect --bootstrap
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
         context: .
-        platforms: linux/amd64,linux/arm64,linux/arm/v7 #,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
-        push: true
+        platforms: linux/amd64,linux/arm64 #,linux/arm/v7,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
+        push: false
         tags: "${{ steps.time.outputs.milliseconds_since_epoch }}"
 #        labels: 
 #        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache
