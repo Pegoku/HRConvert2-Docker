@@ -9,7 +9,7 @@ $Salts5 = 'MoreRandomStuff';
 $Salts6 = 'LastOne';
 
 //Put the URL used to access HRConvert here
-$URL = 'localhost:8085';
+$URL = 'loalhost:8081';
 
 //Set to true to enable virus scanning during all file operations
 $VirusScan = FALSE;
