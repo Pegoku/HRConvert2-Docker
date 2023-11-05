@@ -13,7 +13,7 @@ jobs:
       with:
         format: "DD_HH_mm_ss"
 
-    # - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
     # - name: Build the Docker image
     #    run: docker build . --file Dockerfile --tag hrconvert2:$(date +%s)
       
@@ -31,8 +31,8 @@ jobs:
       with:
         context: .
         platforms: linux/amd64,linux/arm64 #,linux/arm/v7,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
-        push: false
-        tags: "${{ steps.time.outputs.milliseconds_since_epoch }}"
+        push: true
+        tags: "${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:${{ steps.time.outputs.milliseconds_since_epoch }}"
 #        labels: 
-#        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache
-#        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache,mode=max
+        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:buildcache
+        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrconvert2:buildcache,mode=max
