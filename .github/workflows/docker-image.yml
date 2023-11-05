@@ -8,10 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: Kaven-Universe/github-action-current-date-time@v1
-      id: time
-      with:
-        format: "YYYY_MM_DD HH_mm_ss_SSS"
+    - uses: iawia002/get-tag-or-commit-id@v1.0.0
+      id: commit
     
     - uses: actions/checkout@v3
     - name: Build the Docker image
@@ -28,7 +26,7 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64,linux/arm/v7 #,linux/arm/v6, linux/386, linux/ppc64le,linux/s390x
         push: true
-        tags: "${{ steps.time.outputs.time }}"
+        tags: "${{ steps.get-version-id.outputs.id }}"
 #        labels: ${{ steps.meta.outputs.labels }}
 #        cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache
 #        cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/hrConvert2:buildcache,mode=max
